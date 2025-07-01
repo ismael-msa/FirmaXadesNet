@@ -1798,7 +1798,7 @@ namespace Microsoft.Xades
             //MethodInfo SignedXml_Type_CheckDigestedReferences = SignedXml_Type.GetMethod("CheckDigestedReferences", BindingFlags.NonPublic | BindingFlags.Instance);
             //return Convert.ToBoolean(SignedXml_Type_CheckDigestedReferences.Invoke(this, null));
 
-            // Node que incluye el bloque de firma dentro del xml
+            // Nodo que incluye el bloque de firma dentro del xml
             var namespaceManager = new XmlNamespaceManager(signatureDocument.NameTable);
             namespaceManager.AddNamespace("ds", "http://www.w3.org/2000/09/xmldsig#");
             var signatureNode = signatureDocument.SelectSingleNode("//ds:Signature", namespaceManager);
@@ -1813,7 +1813,7 @@ namespace Microsoft.Xades
                 {
                     if(transform is XmlDsigEnvelopedSignatureTransform && signatureNode != null) 
                     {
-                        // Es una referencia de tipo Enveloped, se tiene que quitar el nodo de la firma para realizar la validación
+                        // La referencia incluye un trasnform de tipo Enveloped, se ha de realizar la validación excluyendo el nodo de la firma
                         isSignatureReference = true;
                         signatureDocument.DocumentElement.RemoveChild(signatureNode);
                     }
@@ -1830,7 +1830,6 @@ namespace Microsoft.Xades
 
                 if(!computedDigest.SequenceEqual(expectedDigest))
                 {
-                    System.Diagnostics.Debug.WriteLine($"[DEBUG]: Error de cómputo: {reference.Id} - Digest: {reference.DigestMethod}");
                     return false;
                 }
             }
