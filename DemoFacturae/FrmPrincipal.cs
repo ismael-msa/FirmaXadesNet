@@ -21,10 +21,6 @@
 // Email: informatica@gemuc.es
 // 
 // --------------------------------------------------------------------------------------------------------------------
-
-using FirmaXadesNet;
-using FirmaXadesNet.Crypto;
-using FirmaXadesNet.Signature.Parameters;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -40,33 +36,49 @@ namespace DemoFacturae
 
         private void btnGenerar_Click(object sender, EventArgs e)
         {
-            XadesService xadesService = new XadesService();
-            SignatureParameters parametros = new SignatureParameters();
+            FirmaXadesNet.XadesService xadesService = new FirmaXadesNet.XadesService();
+            string ficheroFactura = Application.StartupPath + "\\Facturae3_2_2.xml";
 
-            string ficheroFactura = Application.StartupPath + "\\Facturae.xml";
+            // Política de firma de factura-e 3.2.2
+            var parametros = new FirmaXadesNet.Signature.Parameters.SignatureParameters()
+            {
+                SignatureMethod = FirmaXadesNet.Crypto.SignatureMethod.RSAwithSHA256,
+                SigningDate = DateTime.Now,
+                InputMimeType = "text/xml",
+                SignaturePackaging = FirmaXadesNet.Signature.Parameters.SignaturePackaging.ENVELOPED,
+                SignerRole = new FirmaXadesNet.Signature.Parameters.SignerRole(),
+                SignaturePolicyInfo = new FirmaXadesNet.Signature.Parameters.SignaturePolicyInfo()
+                {
+                    PolicyDigestAlgorithm = FirmaXadesNet.Crypto.DigestMethod.SHA1,
+                    PolicyIdentifier = "http://www.facturae.es/politica_de_firma_formato_facturae/politica_de_firma_formato_facturae_v3_1.pdf",
+                    PolicyHash = "Ohixl6upD6av8N7pEvDABhEL6hM=",
+                },
+            };
 
-            // Política de firma de factura-e 3.1
-            parametros.SignaturePolicyInfo = new SignaturePolicyInfo();
-            parametros.SignaturePolicyInfo.PolicyIdentifier = "http://www.facturae.es/politica_de_firma_formato_facturae/politica_de_firma_formato_facturae_v3_1.pdf";
-            parametros.SignaturePolicyInfo.PolicyHash = "Ohixl6upD6av8N7pEvDABhEL6hM=";
-            parametros.SignaturePackaging = SignaturePackaging.ENVELOPED;
-            parametros.InputMimeType = "text/xml";
-            parametros.SignerRole = new SignerRole();
             parametros.SignerRole.ClaimedRoles.Add("emisor");
 
-            using (parametros.Signer = new Signer(FirmaXadesNet.Utils.CertUtil.SelectCertificate()))
+            using (parametros.Signer = new FirmaXadesNet.Crypto.Signer(FirmaXadesNet.Utils.CertUtil.SelectCertificate()))
             {
                 using (FileStream fs = new FileStream(ficheroFactura, FileMode.Open))
                 {
                     var docFirmado = xadesService.Sign(fs, parametros);
 
-                    if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
                         docFirmado.Save(saveFileDialog1.FileName);
-                        MessageBox.Show("Fichero guardado correctamente.");
+                        LogToConsole("Fichero guardado correctamente.");
+
+                        // Validación de la firma
+                        var result = xadesService.Validate(docFirmado);
+                        LogToConsole(result.IsValid ? "La firma es válida" : "La firma NO es válida");
                     }
                 }
             }
+        }
+
+        private void LogToConsole(string message) 
+        {
+            Console.Text += $"{message}\n";
         }
     }
 }

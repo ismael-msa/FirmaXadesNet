@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
+using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -1793,11 +1794,48 @@ namespace Microsoft.Xades
 
         private bool CheckDigestedReferences()
         {
-            Type SignedXml_Type = typeof(SignedXml);
+            //Type SignedXml_Type = typeof(SignedXml);
+            //MethodInfo SignedXml_Type_CheckDigestedReferences = SignedXml_Type.GetMethod("CheckDigestedReferences", BindingFlags.NonPublic | BindingFlags.Instance);
+            //return Convert.ToBoolean(SignedXml_Type_CheckDigestedReferences.Invoke(this, null));
 
-            MethodInfo SignedXml_Type_CheckDigestedReferences = SignedXml_Type.GetMethod("CheckDigestedReferences", BindingFlags.NonPublic | BindingFlags.Instance);
+            // Node que incluye el bloque de firma dentro del xml
+            var namespaceManager = new XmlNamespaceManager(signatureDocument.NameTable);
+            namespaceManager.AddNamespace("ds", "http://www.w3.org/2000/09/xmldsig#");
+            var signatureNode = signatureDocument.SelectSingleNode("//ds:Signature", namespaceManager);
 
-            return Convert.ToBoolean(SignedXml_Type_CheckDigestedReferences.Invoke(this, null));
+            // Validamos las referencias de forma individual
+            var m_referencedItems = typeof(Signature).GetField("m_referencedItems", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(m_signature);
+                                  
+            foreach(Reference reference in this.SignedInfo.References)
+            {
+                bool isSignatureReference = false;
+                foreach(var transform in reference.TransformChain) 
+                {
+                    if(transform is XmlDsigEnvelopedSignatureTransform && signatureNode != null) 
+                    {
+                        // Es una referencia de tipo Enveloped, se tiene que quitar el nodo de la firma para realizar la validación
+                        isSignatureReference = true;
+                        signatureDocument.DocumentElement.RemoveChild(signatureNode);
+                    }
+                }
+                      
+                var calculateHash = reference.GetType().GetMethod("CalculateHashValue", BindingFlags.Instance | BindingFlags.NonPublic);
+
+                byte[] computedDigest = (byte[])calculateHash?.Invoke(reference, new object[] { signatureDocument, m_referencedItems });
+                byte[] expectedDigest = reference.DigestValue;
+
+                // Volvemos a añadir el nodo de la firma para mantener la integridad del documento una vez validado
+                if(isSignatureReference)
+                    signatureDocument.DocumentElement.AppendChild(signatureNode);
+
+                if(!computedDigest.SequenceEqual(expectedDigest))
+                {
+                    System.Diagnostics.Debug.WriteLine($"[DEBUG]: Error de cómputo: {reference.Id} - Digest: {reference.DigestMethod}");
+                    return false;
+                }
+            }
+
+            return true;
         }
 
        

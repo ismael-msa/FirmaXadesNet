@@ -78,6 +78,9 @@
     <Content Include="Facturae.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Facturae3_2_2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FirmaXadesNet\FirmaXadesNet.csproj">

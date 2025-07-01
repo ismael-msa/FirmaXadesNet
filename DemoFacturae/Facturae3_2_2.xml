@@ -1,0 +1,172 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<facturae:Facturae xmlns:facturae="http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:fe="http://www.facturae.es/Facturae/2014/v3.2.2/Facturae">
+  <FileHeader>
+    <SchemaVersion>3.2.2</SchemaVersion>
+    <Modality>I</Modality>
+    <InvoiceIssuerType>EM</InvoiceIssuerType>
+    <Batch>
+      <BatchIdentifier>P8271960J1202500001</BatchIdentifier>
+      <InvoicesCount>1</InvoicesCount>
+      <TotalInvoicesAmount>
+        <TotalAmount>121</TotalAmount>
+      </TotalInvoicesAmount>
+      <TotalOutstandingAmount>
+        <TotalAmount>121</TotalAmount>
+      </TotalOutstandingAmount>
+      <TotalExecutableAmount>
+        <TotalAmount>121</TotalAmount>
+      </TotalExecutableAmount>
+      <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
+    </Batch>
+  </FileHeader>
+  <Parties>
+    <SellerParty>
+      <TaxIdentification>
+        <PersonTypeCode>J</PersonTypeCode>
+        <ResidenceTypeCode>R</ResidenceTypeCode>
+        <TaxIdentificationNumber>P8271960J</TaxIdentificationNumber>
+      </TaxIdentification>
+      <LegalEntity>
+        <CorporateName>SOCIEDAD ANONIMA SA</CorporateName>
+        <AddressInSpain>
+          <Address>Calle test 1</Address>
+          <PostCode>00001</PostCode>
+          <Town>Pueblo</Town>
+          <Province>Islas Balears</Province>
+          <CountryCode>ESP</CountryCode>
+        </AddressInSpain>
+      </LegalEntity>
+    </SellerParty>
+    <BuyerParty>
+      <TaxIdentification>
+        <PersonTypeCode>F</PersonTypeCode>
+        <ResidenceTypeCode>R</ResidenceTypeCode>
+        <TaxIdentificationNumber>30825882V</TaxIdentificationNumber>
+      </TaxIdentification>
+      <AdministrativeCentres>
+        <AdministrativeCentre>
+          <CentreCode>L01280043</CentreCode>
+          <RoleTypeCode>01</RoleTypeCode>
+          <Name>SOCIEDAD ANONIMA SA</Name>
+          <AddressInSpain>
+            <Address>Calle test 1</Address>
+            <PostCode>00001</PostCode>
+            <Town>Pueblo</Town>
+            <Province>Islas Balears</Province>
+            <CountryCode>ESP</CountryCode>
+          </AddressInSpain>
+          <LogicalOperationalPoint>1</LogicalOperationalPoint>
+          <CentreDescription>Principal</CentreDescription>
+        </AdministrativeCentre>
+        <AdministrativeCentre>
+          <CentreCode>L01280043</CentreCode>
+          <RoleTypeCode>02</RoleTypeCode>
+          <Name>SOCIEDAD ANONIMA SA</Name>
+          <AddressInSpain>
+            <Address>Calle test 1</Address>
+            <PostCode>00001</PostCode>
+            <Town>Pueblo</Town>
+            <Province>Islas Balears</Province>
+            <CountryCode>ESP</CountryCode>
+          </AddressInSpain>
+          <LogicalOperationalPoint>1</LogicalOperationalPoint>
+          <CentreDescription>Principal</CentreDescription>
+        </AdministrativeCentre>
+        <AdministrativeCentre>
+          <CentreCode>L01280043</CentreCode>
+          <RoleTypeCode>03</RoleTypeCode>
+          <Name>SOCIEDAD ANONIMA SA</Name>
+          <AddressInSpain>
+            <Address>Calle test 1</Address>
+            <PostCode>00001</PostCode>
+            <Town>Pueblo</Town>
+            <Province>Islas Balears</Province>
+            <CountryCode>ESP</CountryCode>
+          </AddressInSpain>
+          <LogicalOperationalPoint>1</LogicalOperationalPoint>
+          <CentreDescription>Principal</CentreDescription>
+        </AdministrativeCentre>
+        <AdministrativeCentre>
+          <CentreCode>L01280043</CentreCode>
+          <RoleTypeCode>04</RoleTypeCode>
+          <Name>SOCIEDAD ANONIMA SA</Name>
+          <AddressInSpain>
+            <Address>Calle test 1</Address>
+            <PostCode>00001</PostCode>
+            <Town>Pueblo</Town>
+            <Province>Islas Balears</Province>
+            <CountryCode>ESP</CountryCode>
+          </AddressInSpain>
+          <LogicalOperationalPoint>1</LogicalOperationalPoint>
+          <CentreDescription>Principal</CentreDescription>
+        </AdministrativeCentre>
+      </AdministrativeCentres>
+      <Individual>
+        <Name>Pruebas</Name>
+        <FirstSurname>desconocido</FirstSurname>
+        <AddressInSpain>
+          <Address>Calle test 2</Address>
+          <PostCode>00002</PostCode>
+          <Town>Pueblo</Town>
+          <Province>Islas Baleares</Province>
+          <CountryCode>ESP</CountryCode>
+        </AddressInSpain>
+      </Individual>
+    </BuyerParty>
+  </Parties>
+  <Invoices>
+    <Invoice>
+      <InvoiceHeader>
+        <InvoiceNumber>202500001</InvoiceNumber>
+        <InvoiceSeriesCode>1</InvoiceSeriesCode>
+        <InvoiceDocumentType>FC</InvoiceDocumentType>
+        <InvoiceClass>OO</InvoiceClass>
+      </InvoiceHeader>
+      <InvoiceIssueData>
+        <IssueDate>2025-07-01</IssueDate>
+        <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
+        <TaxCurrencyCode>EUR</TaxCurrencyCode>
+        <LanguageName>es</LanguageName>
+      </InvoiceIssueData>
+      <TaxesOutputs>
+        <Tax xs:type="facturae:TaxOutputType">
+          <TaxTypeCode>01</TaxTypeCode>
+          <TaxRate>21</TaxRate>
+          <TaxableBase>
+            <TotalAmount>100</TotalAmount>
+          </TaxableBase>
+          <TaxAmount>
+            <TotalAmount>21</TotalAmount>
+          </TaxAmount>
+        </Tax>
+      </TaxesOutputs>
+      <InvoiceTotals>
+        <TotalGrossAmount>100</TotalGrossAmount>
+        <TotalGrossAmountBeforeTaxes>100</TotalGrossAmountBeforeTaxes>
+        <TotalTaxOutputs>21</TotalTaxOutputs>
+        <TotalTaxesWithheld>0</TotalTaxesWithheld>
+        <InvoiceTotal>121</InvoiceTotal>
+        <TotalOutstandingAmount>121</TotalOutstandingAmount>
+        <TotalExecutableAmount>121</TotalExecutableAmount>
+      </InvoiceTotals>
+      <Items>
+        <InvoiceLine>
+          <ItemDescription>Artículo de prueba</ItemDescription>
+          <Quantity>10</Quantity>
+          <UnitPriceWithoutTax>190</UnitPriceWithoutTax>
+          <TotalCost>1900</TotalCost>
+          <GrossAmount>1900</GrossAmount>
+          <TaxesOutputs>
+            <Tax>
+              <TaxTypeCode>01</TaxTypeCode>
+              <TaxRate>21</TaxRate>
+              <TaxableBase>
+                <TotalAmount>1900</TotalAmount>
+              </TaxableBase>
+            </Tax>
+          </TaxesOutputs>
+        </InvoiceLine>
+      </Items>
+    </Invoice>
+  </Invoices>
+</facturae:Facturae>
